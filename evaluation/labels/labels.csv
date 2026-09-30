@@ -1,0 +1,5 @@
+unit_id,check_key,true_verdict,second_verdict,notes
+# Add one row per check for each unit you photograph. check_key=_decision holds the true overall decision.,,,,
+# true_verdict: PASS / FAIL / UNCERTAIN. second_verdict is optional: a second labeller's independent verdict.,,,,
+# Leave second_verdict empty and human agreement is reported as "Not measured" rather than estimated.,,,,
+# Example format only (not a real label): UNIT-0001,identity,PASS,PASS,label readable
