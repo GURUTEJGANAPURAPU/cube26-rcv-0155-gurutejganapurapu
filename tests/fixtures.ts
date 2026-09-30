@@ -17,13 +17,37 @@ export const expected: PoLineExpectation = {
   qty_ordered: 24,
 };
 
-const obs = <T,>(value: T, ids = ["img-1"]) => ({ value, confidence: 0.9, evidence_image_ids: ids, observation: "visible" });
-const dmg = (types: string[] = []) => ({ types, confidence: 0.9, evidence_image_ids: ["img-1"], observation: types.length ? "damage visible" : "no damage visible" });
+const obs = <T,>(
+  value: T,
+  ids = ["img-1"]
+) => ({
+  value,
+  confidence: 0.9,
+  evidence_image_ids: ids,
+  observation: "visible",
+});
+
+const dmg = (types: string[] = []) => ({
+  types,
+  confidence: 0.9,
+  evidence_image_ids: ["img-1"],
+  observation: types.length
+    ? "damage visible"
+    : "no damage visible",
+});
 
 /** A clean, fully-evidenced observation set that matches `expected`. */
 export function cleanVision(): VisionResponse {
   return {
-    evidence_sufficiency: { identity: "sufficient", quantity: "sufficient", variant: "sufficient", colour: "sufficient", components: "sufficient", damage: "sufficient" },
+    evidence_sufficiency: {
+      identity: "sufficient",
+      quantity: "sufficient",
+      variant: "sufficient",
+      colour: "sufficient",
+      components: "sufficient",
+      damage: "sufficient",
+    },
+
     observations: {
       sku: obs("SKU-CANDLE-3"),
       product_title: obs("Soy Candle Trio"),
@@ -38,10 +62,35 @@ export function cleanVision(): VisionResponse {
       unit_damage: dmg(),
       obvious_defects: dmg(),
     },
-    quantity_evidence: { coverage: "complete", cartons_fully_counted: 2, observation: "both cartons open" },
+
+    quantity_evidence: {
+      coverage: "complete",
+      cartons_fully_counted: 2,
+      observation: "both cartons open",
+      carton_counts: [
+        {
+          carton_index: 1,
+          verified_units: null,
+          fully_counted: true,
+          evidence_image_ids: [],
+        },
+        {
+          carton_index: 2,
+          verified_units: null,
+          fully_counted: true,
+          evidence_image_ids: [],
+        },
+      ],
+    },
+
     contradictions: [],
+
     missing_views: [],
   };
 }
 
-export const meta = { model_version: "test-model", prompt_version: "test-prompt", latency_ms: 10 };
+export const meta = {
+  model_version: "test-model",
+  prompt_version: "test-prompt",
+  latency_ms: 10,
+};
